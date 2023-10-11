@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body>
+<h1>You are Logged In</h1>
+<h2><%= current_user.first_name %></h2>
+<h2><%= current_user.city %></h2>
+<h2><%= current_user.hobbies %></h2>
+<%= link_to 'Edit Profile', edit_user_registration_path, class: 'nav-link' %>
+
+<%= form_tag search_users_path, method: :post, remote: true do %>
+  <%= submit_tag 'Find Matching Users' %>
+<% end %>
+
+<%= form_tag export_users_to_csv_path(format: :csv), method: :get do %>
+  <%= button_tag 'Export Users to CSV', class: 'btn btn-primary' %>
+<% end %>
+
+<% if @matching_users.present? %>
+  <h2><%= @matching_users.first.first_name %></h2>
+  <% @matching_users.each do |user| %>
+    <h2><%= user.first_name %></h2>
+  <% end %>
+<% else %>
+  <p>No matching users found.</p>
+<% end %>
+
+
+</body>
+</html>
